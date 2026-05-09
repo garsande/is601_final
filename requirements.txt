@@ -53,3 +53,4 @@ urllib3==2.3.0
 uvicorn==0.34.0
 redis>=4.2.0
 setuptools>=70.0.0
+beautifulsoup4==4.14.3
