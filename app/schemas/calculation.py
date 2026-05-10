@@ -36,6 +36,14 @@ class CalculationType(str, Enum):
     SUBTRACTION = "subtraction"
     MULTIPLICATION = "multiplication"
     DIVISION = "division"
+    POWER = "power"
+    ROOT = "root"
+    MODULUS = "modulus"
+    INTEGER_DIVIDE = "integerDivide"
+    ABSOLUTE_DIFFERENCE = "absoluteDifference"
+    PERCENTAGE = "parcentage"
+    LOGARITHM = "logarithm"
+
 
 class CalculationBase(BaseModel):
     """
@@ -130,6 +138,37 @@ class CalculationBase(BaseModel):
             # Prevent division by zero (skip the first value as numerator)
             if any(x == 0 for x in self.inputs[1:]):
                 raise ValueError("Cannot divide by zero")
+        if self.type == CalculationType.POWER:
+            # Prevent division by zero (skip the first value as numerator)
+            if any(x == 0 for x in self.inputs[1:]):
+                raise ValueError("Negative exponents not supported.")
+        if self.type == CalculationType.ROOT:
+            # Prevent division by zero (skip the first value as numerator)
+            if any(x == 0 for x in self.inputs[1:]):
+                raise ValueError("Cannot calculate root of negative number")
+            if any(x < 0 for x in self.inputs[1:]):
+                raise ValueError("Zero root is undefined")
+        if self.type == CalculationType.MODULUS:    
+            if any(x == 0 for x in self.inputs[1:]):
+                raise ValueError("Zero base is undefined")
+        if self.type == CalculationType.INTEGER_DIVIDE:    
+            if any(x == 0 for x in self.inputs[1:]):
+                raise ValueError("Division by zero is not allowed")    
+        if self.type == CalculationType.PERCENTAGE:    
+            if any(x == 0 for x in self.inputs[1:]):
+                raise ValueError("Zero base is undefined")    
+        if self.type == CalculationType.LOGARITHM:    
+            if any(x == 0 for x in self.inputs[1:]):
+                raise ValueError("Zero base is undefined")
+            if any(x < 0 for x in self.inputs[1:]):
+                raise ValueError("Negative base is undefined") 
+            if any(x == 1 for x in self.inputs[1:]):
+                raise ValueError("Base value one is undefined")
+            if self.inputs[0] == 0:
+                raise ValueError("Zero exponent is undefined") 
+            if self.inputs[0] < 0:
+                raise ValueError("Negative exponent is undefined")  
+            self.inputs[0]
         return self
 
     model_config = ConfigDict(

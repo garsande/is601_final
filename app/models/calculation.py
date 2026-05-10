@@ -22,6 +22,7 @@ from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship, declared_attr
 from sqlalchemy.ext.declarative import declared_attr
 from app.database import Base
+import math
 
 class AbstractCalculation:
     """
@@ -178,6 +179,13 @@ class AbstractCalculation:
             'subtraction': Subtraction,
             'multiplication': Multiplication,
             'division': Division,
+            'power': Power,
+            'root': Root,
+            'modulus' : Modulus,
+            'integerDivide': IntegerDivide,
+            'absoluteDifference': AbsoluteDifference,
+            'percentage': Percentage,
+            'logarithm': Logarithm
         }
         calculation_class = calculation_classes.get(calculation_type.lower())
         if not calculation_class:
@@ -353,4 +361,246 @@ class Division(Calculation):
             if value == 0:
                 raise ValueError("Cannot divide by zero.")
             result /= value
+        return result
+
+class Power(Calculation):
+    """
+    Power (exponentiation) operation implementation.
+
+    Raises one number to the power of another.
+    """
+    __mapper_args__ = {"polymorphic_identity": "power"}
+
+    def get_result(self) -> float:
+        """
+        Calculate the result of one number raised to the power of remaining numbers sequentially.
+
+        Takes the first number and raises to power all remaining numbers sequentially.
+        Includes validation to prevent negative power exponent.
+
+        Returns:
+            float: Result of the exponentiation.
+       
+            
+        Raises:
+            ValueError: If inputs are not a list, if fewer than 2 numbers provided,
+                        or if attempting to raise by negative number
+        """
+        if not isinstance(self.inputs, list):
+            raise ValueError("Inputs must be a list of numbers.")
+        if len(self.inputs) < 2:
+            raise ValueError("Inputs must be a list with at least two numbers.")
+        result = self.inputs[0]
+        for value in self.inputs[1:]:
+            if value < 0:
+                raise ValueError("Negative exponents not supported.")
+            result = pow(float(result), float(value))
+        return result
+    
+   
+
+
+class Root(Calculation):
+    """
+    Root operation implementation.
+
+    Calculates the nth root of a number.
+    """
+    __mapper_args__ = {"polymorphic_identity": "root"}
+
+    def get_result(self) -> float:
+        """
+        Calculate the result of one number to the root of remaining numbers sequentially.
+
+        Takes the first number and finds the root of all remaining numbers sequentially.
+        Includes validation to prevent if the number is negative or the root degree is zero.
+
+        Returns:
+            float: Result of the root calculation.
+       
+            
+        Raises:
+            ValueError: If inputs are not a list, if fewer than 2 numbers provided,
+                        or if the number is negative or the root degree is zero.
+        """
+        if not isinstance(self.inputs, list):
+            raise ValueError("Inputs must be a list of numbers.")
+        if len(self.inputs) < 2:
+            raise ValueError("Inputs must be a list with at least two numbers.")
+        result = self.inputs[0]
+        for value in self.inputs[1:]:
+            if value < 0:
+                raise ValueError("Cannot calculate root of negative number")
+            if value == 0:
+                raise ValueError("Zero root is undefined")
+            result = pow(float(result), 1 / float(value))
+        return result
+
+class Modulus(Calculation):
+    """
+    Divides the first number by the second and subsequent numbers sequentially and returns the remainder.
+
+    """
+
+    __mapper_args__ = {"polymorphic_identity": "modulus"}
+    def get_result(self) -> float:
+        """
+        Calculate the remainder of dividing the first value by all subsequent values.
+        
+        Takes the first number and divides by all remaining numbers sequentially and gets the remainder.
+        Includes validation to prevent division by zero.
+        
+        Returns:
+            float: The result of the division sequence
+            
+        Raises:
+            ValueError: If inputs are not a list, if fewer than 2 numbers provided,
+                        or if attempting to divide by zero
+        """
+        if not isinstance(self.inputs, list):
+            raise ValueError("Inputs must be a list of numbers.")
+        if len(self.inputs) < 2:
+            raise ValueError("Inputs must be a list with at least two numbers.")
+        result = self.inputs[0]
+        for value in self.inputs[1:]:
+            if value == 0:
+                raise ValueError("Zero base is undefined")
+            result = result % value
+        return result
+    
+class IntegerDivide(Calculation):
+    """
+        Divides the first number by the second and subsequent numbers sequentailly and returns the integer quotient.
+
+    """
+
+    __mapper_args__ = {"polymorphic_identity": "integerDivide"}
+
+    def get_result(self) -> float:
+        """
+        Calculate the integer quotient of dividing the first value by all subsequent values.
+        
+        Takes the first number and divides by all remaining numbers sequentially and gets the integer quotient.
+        Includes validation to prevent division by zero.
+        
+        Returns:
+            float: The result of the division sequence
+            
+        Raises:
+            ValueError: If inputs are not a list, if fewer than 2 numbers provided,
+                        or if attempting to divide by zero
+        """
+        if not isinstance(self.inputs, list):
+            raise ValueError("Inputs must be a list of numbers.")
+        if len(self.inputs) < 2:
+            raise ValueError("Inputs must be a list with at least two numbers.")
+        result = self.inputs[0]
+        for value in self.inputs[1:]:
+            if value == 0:
+                raise ValueError("Division by zero is not allowed")
+            result //= value
+        return result
+    
+class AbsoluteDifference(Calculation):
+    """
+        Subtracts the second number from the first and returns the absolute value of result.
+
+    """
+
+    __mapper_args__ = {"polymorphic_identity": "absoluteDifference"}
+
+    def get_result(self) -> float:
+        """
+        Calculate the absolute value of subtracting the first value by all subsequent values.
+        
+        Takes the first number and subtracts by all remaining numbers sequentially and gets the absolute value.
+                
+        Returns:
+            float: The result of the absolute subtraction sequence
+            
+        Raises:
+            ValueError: If inputs are not a list, if fewer than 2 numbers provided
+        """
+        if not isinstance(self.inputs, list):
+            raise ValueError("Inputs must be a list of numbers.")
+        if len(self.inputs) < 2:
+            raise ValueError("Inputs must be a list with at least two numbers.")
+        result = self.inputs[0]
+        for value in self.inputs[1:]:
+            result = abs(result - value) 
+        return result
+    
+class Percentage(Calculation):
+    """
+        Divides the first number by the second and subsequent numbers sequentially 
+        and then multiply by 100 to get percentage value
+        
+    """
+
+    __mapper_args__ = {"polymorphic_identity": "percentage"}
+
+    def get_result(self) -> float:
+        """
+        Calculate the percentage by dividing the first value by all subsequent values and then mulitplying by 100.
+        
+        Takes the first number and divides by all remaining numbers sequentially and then muliplies by 100.
+        Includes validation to prevent division by zero.
+        
+        Returns:
+            float: The result of the percentage sequence
+            
+        Raises:
+            ValueError: If inputs are not a list, if fewer than 2 numbers provided,
+                        or if attempting to divide by zero
+        """
+        if not isinstance(self.inputs, list):
+            raise ValueError("Inputs must be a list of numbers.")
+        if len(self.inputs) < 2:
+            raise ValueError("Inputs must be a list with at least two numbers.")
+        result = self.inputs[0]
+        for value in self.inputs[1:]:
+            if value == 0:
+                raise ValueError("Zero base is undefined")
+            result = (float(result) / float(value)) * 100  # Divides result by value and then multiplies by 100 to get percentage value.
+        return result
+    
+class Logarithm(Calculation):
+    """
+        Finds the log of the first number with the second as the base 
+        and then does the same for subsequent numbers sequentially
+    """
+
+    __mapper_args__ = {"polymorphic_identity": "logarithm"}
+
+    def get_result(self) -> float:
+        """
+        Calculate the log of first value with second as the base and 
+        then does the same for  all subsequent values.
+                
+        Returns:
+            float: The result of the logarithm sequence
+            
+        Raises:
+            ValueError: If inputs are not a list, if fewer than 2 numbers provided,
+                        or if attempting to divide by zero
+        """
+        if not isinstance(self.inputs, list):
+            raise ValueError("Inputs must be a list of numbers.")
+        if len(self.inputs) < 2:
+            raise ValueError("Inputs must be a list with at least two numbers.")
+        result = self.inputs[0]
+        
+        if result == 0:
+            raise ValueError("Zero exponent is undefined")  
+        if result < 0:
+            raise ValueError("Negative exponent is undefined")  
+
+        for value in self.inputs[1:]:
+            if value == 0:
+                raise ValueError("Zero base is undefined")  # Raises an error if division by zero is attempted.
+            if value < 0:
+                raise ValueError("Negative base is undefined") 
+            if value == 1:
+                raise ValueError("Base value one is undefined") 
+            result = math.log(result, value) 
         return result

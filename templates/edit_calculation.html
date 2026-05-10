@@ -294,6 +294,70 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
         result = inputs.reduce((a, b, i) => i === 0 ? a : a / b, inputs[0]);
         break;
+      case 'power':
+        // Avoid negative exponent
+        if (inputs.some((value, index) => index > 0 && value < 0)) {
+          return 'Negative exponents not supported.';
+        }
+        result = inputs.reduce((a, b, i) => i === 0 ? a : a ** b, inputs[0]);
+        break;
+      case 'root':
+        // Avoid negative exponent
+        if (inputs.some((value, index) => index > 0 && value < 0)) {
+          return 'Cannot calculate root of negative number';
+        }
+        if (inputs.some((value, index) => index > 0 && value === 0)) {
+          return 'Zero root is undefined';
+        }
+        result = inputs.reduce((a, b, i) => i === 0 ? a : a ** (1/b), inputs[0]);
+        break;
+      case 'modulus':
+        // Avoid zero base
+        if (inputs.some((value, index) => index > 0 && value === 0)) {
+          return 'Zero base is undefined';
+        }
+        result = inputs.reduce((a, b, i) => i === 0 ? a : a % b, inputs[0]);
+        break; 
+      case 'integerDivide':
+        // Avoid zero base
+        if (inputs.some((value, index) => index > 0 && value === 0)) {
+          return 'Division by zero is not allowed';
+        }
+        if (a > 0){
+            result = inputs.reduce((a, b, i) => i === 0 ? a : Math.floor(a / b), inputs[0]); 
+        } else {
+            result = inputs.reduce((a, b, i) => i === 0 ? a : Math.trunc(a / b), inputs[0]);
+        }
+        break; 
+      case 'absoluteDifference':
+        result = inputs.reduce((a, b, i) => i === 0 ? a : Math.abs(a - b), inputs[0]);
+        break;  
+      case 'percentage':
+        // Avoid zero base
+        if (inputs.some((value, index) => index > 0 && value === 0)) {
+          return 'Zero base is undefined';
+        }
+        result = inputs.reduce((a, b, i) => i === 0 ? a : (a / b) * 100, inputs[0]);
+        break;
+      case 'logarithm':
+        // Avoid zero base
+        if (inputs.some((value, index) => index > 0 && value === 0)) {
+          return 'Zero base is undefined';
+        }
+        if (inputs.some((value, index) => index > 0 && value < 0)) {
+          return 'Negative base is undefined';
+        }
+        if (inputs.some((value, index) => index > 0 && value === 1)) {
+          return 'Base value one is undefined';
+        }
+        if (inputs[0] === 0) {
+          return 'Zero exponent is undefined';
+        }
+        if (inputs[0] < 0) {
+          return 'Negative exponent is undefined';
+        }
+        result = inputs.reduce((a, b, i) => i === 0 ? a : Math.log(a) / Math.log(b), inputs[0]);
+        break; 
       default:
         return 'Unknown operation';
     }
