@@ -39,9 +39,9 @@ class CalculationType(str, Enum):
     POWER = "power"
     ROOT = "root"
     MODULUS = "modulus"
-    INTEGER_DIVIDE = "integerDivide"
-    ABSOLUTE_DIFFERENCE = "absoluteDifference"
-    PERCENTAGE = "parcentage"
+    INTEGER_DIVIDE = "integerdivide"
+    ABSOLUTE_DIFFERENCE = "absolutedifference"
+    PERCENTAGE = "percentage"
     LOGARITHM = "logarithm"
 
 
