@@ -318,7 +318,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
         result = inputs.reduce((a, b, i) => i === 0 ? a : a % b, inputs[0]);
         break; 
-      case 'integerDivide':
+      case 'integerdivide':
         // Avoid zero base
         if (inputs.some((value, index) => index > 0 && value === 0)) {
           return 'Division by zero is not allowed';
@@ -329,7 +329,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             result = inputs.reduce((a, b, i) => i === 0 ? a : Math.trunc(a / b), inputs[0]);
         }
         break; 
-      case 'absoluteDifference':
+      case 'absolutedifference':
         result = inputs.reduce((a, b, i) => i === 0 ? a : Math.abs(a - b), inputs[0]);
         break;  
       case 'percentage':
@@ -337,7 +337,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (inputs.some((value, index) => index > 0 && value === 0)) {
           return 'Zero base is undefined';
         }
-        result = inputs.reduce((a, b, i) => i === 0 ? a : (a / b) * 100, inputs[0]);
+        result = inputs.reduce((a, b, i) => i === 0 ? a : (a / 100) * b, inputs[0]);
         break;
       case 'logarithm':
         // Avoid zero base

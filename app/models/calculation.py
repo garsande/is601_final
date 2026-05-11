@@ -182,8 +182,8 @@ class AbstractCalculation:
             'power': Power,
             'root': Root,
             'modulus' : Modulus,
-            'integerDivide': IntegerDivide,
-            'absoluteDifference': AbsoluteDifference,
+            'integerdivide': IntegerDivide,
+            'absolutedifference': AbsoluteDifference,
             'percentage': Percentage,
             'logarithm': Logarithm
         }
@@ -474,7 +474,7 @@ class IntegerDivide(Calculation):
 
     """
 
-    __mapper_args__ = {"polymorphic_identity": "integerDivide"}
+    __mapper_args__ = {"polymorphic_identity": "integerdivide"}
 
     def get_result(self) -> float:
         """
@@ -498,7 +498,7 @@ class IntegerDivide(Calculation):
         for value in self.inputs[1:]:
             if value == 0:
                 raise ValueError("Division by zero is not allowed")
-            result //= value
+            result = result // value
         return result
     
 class AbsoluteDifference(Calculation):
@@ -507,8 +507,7 @@ class AbsoluteDifference(Calculation):
 
     """
 
-    __mapper_args__ = {"polymorphic_identity": "absoluteDifference"}
-
+    __mapper_args__ = {"polymorphic_identity": "absolutedifference"}
     def get_result(self) -> float:
         """
         Calculate the absolute value of subtracting the first value by all subsequent values.
@@ -561,7 +560,7 @@ class Percentage(Calculation):
         for value in self.inputs[1:]:
             if value == 0:
                 raise ValueError("Zero base is undefined")
-            result = (float(result) / float(value)) * 100  # Divides result by value and then multiplies by 100 to get percentage value.
+            result = (float(result) / 100) * float(value)  # Divides result by value and then multiplies by 100 to get percentage value.
         return result
     
 class Logarithm(Calculation):

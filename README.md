@@ -282,12 +282,11 @@ d. Division - Implements sequential division starting from the first number.
 # FastAPI new feature #1
 
 - New calculations 
-a. Exponent
-b.
-c.
-
-# Fast API new feature #2
-
-- Add new user profile page
-
+a. Power - Calculate the power of one raised to the second and other subsequent input values
+b. Root - Calculate the root of one to the second and other subsequent input values
+c. Modulus - Calculate the remainder of one number divided to the second and other subsequent input values
+d. Integer Divide - Implements sequential division starting from the first number and the result is integer.
+e. Absolute Difference - Implements sequential subtraction starting from the first number with a positive result.
+f. Percantage - Calculate the percent of one number with other and then subsequent input values
+g. Logarithm - Calculates the logarithm of one number with other as the base and then subsequent input values.
 
