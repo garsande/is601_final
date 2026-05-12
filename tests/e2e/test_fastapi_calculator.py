@@ -296,6 +296,222 @@ def test_create_calculation_division(base_url: str):
     # Expected result: 100 / 2 / 5 = 10
     assert "result" in data and data["result"] == 10, f"Expected result 10, got {data.get('result')}"
 
+def test_create_calculation_power(base_url: str):
+    user_data = {
+        "first_name": "Calc",
+        "last_name": "Power",
+        "email": f"calc.pow{uuid4()}@example.com",
+        "username": f"calc_pow_{uuid4()}",
+        "password": "SecurePass123!",
+        "confirm_password": "SecurePass123!"
+    }
+    token_data = register_and_login(base_url, user_data)
+    access_token = token_data["access_token"]
+    headers = {"Authorization": f"Bearer {access_token}"}
+    url = f"{base_url}/calculations"
+    payload = {
+        "type": "power",
+        "inputs": [2,4],
+        "user_id": "ignored"
+    }
+    response = requests.post(url, json=payload, headers=headers)
+    assert response.status_code == 201, f"Power calculation creation failed: {response.text}"
+    data = response.json()
+    # Expected result: 100 / 2 / 5 = 10
+    assert "result" in data and data["result"] == 16, f"Expected result 10, got {data.get('result')}"
+
+def test_create_calculation_root(base_url: str):
+    user_data = {
+        "first_name": "Calc",
+        "last_name": "Root",
+        "email": f"calc.root{uuid4()}@example.com",
+        "username": f"calc_root_{uuid4()}",
+        "password": "SecurePass123!",
+        "confirm_password": "SecurePass123!"
+    }
+    token_data = register_and_login(base_url, user_data)
+    access_token = token_data["access_token"]
+    headers = {"Authorization": f"Bearer {access_token}"}
+    url = f"{base_url}/calculations"
+    payload = {
+        "type": "root",
+        "inputs": [64,2],
+        "user_id": "ignored"
+    }
+    response = requests.post(url, json=payload, headers=headers)
+    assert response.status_code == 201, f"Root calculation creation failed: {response.text}"
+    data = response.json()
+    # Expected result: 100 / 2 / 5 = 10
+    assert "result" in data and data["result"] == 8, f"Expected result 10, got {data.get('result')}"
+
+def test_create_calculation_modulus(base_url: str):
+    user_data = {
+        "first_name": "Calc",
+        "last_name": "Modulus",
+        "email": f"calc.modulus{uuid4()}@example.com",
+        "username": f"calc_modulus_{uuid4()}",
+        "password": "SecurePass123!",
+        "confirm_password": "SecurePass123!"
+    }
+    token_data = register_and_login(base_url, user_data)
+    access_token = token_data["access_token"]
+    headers = {"Authorization": f"Bearer {access_token}"}
+    url = f"{base_url}/calculations"
+    payload = {
+        "type": "modulus",
+        "inputs": [10,4],
+        "user_id": "ignored"
+    }
+    response = requests.post(url, json=payload, headers=headers)
+    assert response.status_code == 201, f"Modulus calculation creation failed: {response.text}"
+    data = response.json()
+    # Expected result: 100 / 2 / 5 = 10
+    assert "result" in data and data["result"] == 2, f"Expected result 10, got {data.get('result')}"
+
+def test_create_calculation_absolute_difference(base_url: str):
+    user_data = {
+        "first_name": "Calc",
+        "last_name": "abs",
+        "email": f"calc.abs{uuid4()}@example.com",
+        "username": f"calc_abs_{uuid4()}",
+        "password": "SecurePass123!",
+        "confirm_password": "SecurePass123!"
+    }
+    token_data = register_and_login(base_url, user_data)
+    access_token = token_data["access_token"]
+    headers = {"Authorization": f"Bearer {access_token}"}
+    url = f"{base_url}/calculations"
+    payload = {
+        "type": "absolutedifference",
+        "inputs": [2,-4],
+        "user_id": "ignored"
+    }
+    response = requests.post(url, json=payload, headers=headers)
+    assert response.status_code == 201, f"Absolute Difference calculation creation failed: {response.text}"
+    data = response.json()
+    # Expected result: 100 / 2 / 5 = 10
+    assert "result" in data and data["result"] == 6, f"Expected result 10, got {data.get('result')}"
+
+def test_create_calculation_integer_divide(base_url: str):
+    user_data = {
+        "first_name": "Calc",
+        "last_name": "integerDivide",
+        "email": f"calc.integerDivide{uuid4()}@example.com",
+        "username": f"calc_int_div_{uuid4()}",
+        "password": "SecurePass123!",
+        "confirm_password": "SecurePass123!"
+    }
+    token_data = register_and_login(base_url, user_data)
+    access_token = token_data["access_token"]
+    headers = {"Authorization": f"Bearer {access_token}"}
+    url = f"{base_url}/calculations"
+    payload = {
+        "type": "integerdivide",
+        "inputs": [10,3],
+        "user_id": "ignored"
+    }
+    response = requests.post(url, json=payload, headers=headers)
+    assert response.status_code == 201, f"IntegerDivide calculation creation failed: {response.text}"
+    data = response.json()
+    # Expected result: 100 / 2 / 5 = 10
+    assert "result" in data and data["result"] == 3, f"Expected result 3, got {data.get('result')}"
+
+def test_create_calculation_percentage(base_url: str):
+    user_data = {
+        "first_name": "Calc",
+        "last_name": "Percent",
+        "email": f"calc.percent{uuid4()}@example.com",
+        "username": f"calc_percent_{uuid4()}",
+        "password": "SecurePass123!",
+        "confirm_password": "SecurePass123!"
+    }
+    token_data = register_and_login(base_url, user_data)
+    access_token = token_data["access_token"]
+    headers = {"Authorization": f"Bearer {access_token}"}
+    url = f"{base_url}/calculations"
+    payload = {
+        "type": "percentage",
+        "inputs": [30,100],
+        "user_id": "ignored"
+    }
+    response = requests.post(url, json=payload, headers=headers)
+    assert response.status_code == 201, f"Percentage calculation creation failed: {response.text}"
+    data = response.json()
+    # Expected result: 100 / 2 / 5 = 10
+    assert "result" in data and data["result"] == 30, f"Expected result 10, got {data.get('result')}"
+
+def test_create_calculation_logarithm(base_url: str):
+    user_data = {
+        "first_name": "Calc",
+        "last_name": "Logarithm",
+        "email": f"calc.log{uuid4()}@example.com",
+        "username": f"calc_log_{uuid4()}",
+        "password": "SecurePass123!",
+        "confirm_password": "SecurePass123!"
+    }
+    token_data = register_and_login(base_url, user_data)
+    access_token = token_data["access_token"]
+    headers = {"Authorization": f"Bearer {access_token}"}
+    url = f"{base_url}/calculations"
+    payload = {
+        "type": "logarithm",
+        "inputs": [100,10],
+        "user_id": "ignored"
+    }
+    response = requests.post(url, json=payload, headers=headers)
+    assert response.status_code == 201, f"Logarithm calculation creation failed: {response.text}"
+    data = response.json()
+    # Expected result: 100 / 2 / 5 = 10
+    assert "result" in data and data["result"] == 2, f"Expected result 2, got {data.get('result')}"
+
+def test_create_calculation_power(base_url: str):
+    user_data = {
+        "first_name": "Calc",
+        "last_name": "Power",
+        "email": f"calc.pow{uuid4()}@example.com",
+        "username": f"calc_pow_{uuid4()}",
+        "password": "SecurePass123!",
+        "confirm_password": "SecurePass123!"
+    }
+    token_data = register_and_login(base_url, user_data)
+    access_token = token_data["access_token"]
+    headers = {"Authorization": f"Bearer {access_token}"}
+    url = f"{base_url}/calculations"
+    payload = {
+        "type": "power",
+        "inputs": [2,4],
+        "user_id": "ignored"
+    }
+    response = requests.post(url, json=payload, headers=headers)
+    assert response.status_code == 201, f"Power calculation creation failed: {response.text}"
+    data = response.json()
+    # Expected result: 100 / 2 / 5 = 10
+    assert "result" in data and data["result"] == 16, f"Expected result 10, got {data.get('result')}"
+
+def test_create_calculation_power(base_url: str):
+    user_data = {
+        "first_name": "Calc",
+        "last_name": "Power",
+        "email": f"calc.pow{uuid4()}@example.com",
+        "username": f"calc_pow_{uuid4()}",
+        "password": "SecurePass123!",
+        "confirm_password": "SecurePass123!"
+    }
+    token_data = register_and_login(base_url, user_data)
+    access_token = token_data["access_token"]
+    headers = {"Authorization": f"Bearer {access_token}"}
+    url = f"{base_url}/calculations"
+    payload = {
+        "type": "power",
+        "inputs": [2,4],
+        "user_id": "ignored"
+    }
+    response = requests.post(url, json=payload, headers=headers)
+    assert response.status_code == 201, f"Power calculation creation failed: {response.text}"
+    data = response.json()
+    # Expected result: 100 / 2 / 5 = 10
+    assert "result" in data and data["result"] == 16, f"Expected result 10, got {data.get('result')}"
+
 def test_list_get_update_delete_calculation(base_url: str):
     user_data = {
         "first_name": "Calc",

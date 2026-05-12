@@ -396,8 +396,6 @@ class Power(Calculation):
                 raise ValueError("Negative exponents not supported.")
             result = pow(float(result), float(value))
         return result
-    
-   
 
 
 class Root(Calculation):
@@ -464,7 +462,7 @@ class Modulus(Calculation):
         result = self.inputs[0]
         for value in self.inputs[1:]:
             if value == 0:
-                raise ValueError("Zero base is undefined")
+                raise ValueError("Cannot divide by zero.")
             result = result % value
         return result
     
