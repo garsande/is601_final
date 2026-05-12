@@ -19,6 +19,7 @@ to perform arithmetic operations based on user input.
 """
 
 from typing import Union  # Import Union for type hinting multiple possible types
+import math
 
 # Define a type alias for numbers that can be either int or float
 Number = Union[int, float]
@@ -117,4 +118,182 @@ def divide(a: Number, b: Number) -> float:
     
     # Perform division of a by b and return the result as a float
     result = a / b
+    return result
+
+def power(a: Number, b: Number) -> float:
+    """
+    Raise the power of the first number by the second.
+
+    Parameters:
+    - a (int or float): The base.
+    - b (int or float): The exponent.
+
+    Returns:
+    - float: The value of a to the power of b.
+
+    Raises:
+    - ValueError: If b is negative, as negative exponent is undefined.
+
+    ...
+    ValueError: Negative exponents not supported.
+    """
+    # Check if the divisor is zero to prevent division by zero
+    if b == 0:
+        # Raise a ValueError with a descriptive message
+        raise ValueError("Negative exponents not supported.")
+    
+    # Perform power operation of a by b and return the result as a float
+    result = math.pow(a,  b)
+    return result
+
+def root(a: Number, b: Number) -> float:
+    """
+    Find the root of the first number by the second and return the value.
+
+    Parameters:
+    - a (int or float): The exponent.
+    - b (int or float): The base.
+
+    Returns:
+    - float: The quotient of a divided by b.
+
+    Raises:
+    - ValueError: If b is zero, as division by zero is undefined.
+
+   
+    ValueError: Cannot divide by zero!
+    """
+    # Check if the divisor is zero to prevent division by zero
+    if b == 0:
+        # Raise a ValueError with a descriptive message
+        raise ValueError("Zero root is undefined")
+    if b < 0:
+        # Raise a ValueError with a descriptive message
+        raise ValueError("Cannot calculate root of negative number")
+    # Perform division of a by b and return the result as a float
+    result = pow(float(a), 1 / float(b))
+    return result
+
+def modulus(a: Number, b: Number) -> float:
+    """
+    Divide the first number by the second and return the remainder.
+
+    Parameters:
+    - a (int or float): The dividend.
+    - b (int or float): The divisor.
+
+    Returns:
+    - float: The remainder of a divided by b.
+
+    Raises:
+    - ValueError: If b is zero, as division by zero is undefined.
+
+    ValueError: Cannot divide by zero!
+    """
+    # Check if the divisor is zero to prevent division by zero
+    if b == 0:
+        # Raise a ValueError with a descriptive message
+        raise ValueError("Cannot divide by zero.")
+    
+    # Perform division of a by b and return the result as a float
+    result = a % b
+    return result
+
+
+def integerDivide(a: Number, b: Number) -> float:
+    """
+    Integer Divide the first number by the second and return the quotient.
+
+    Parameters:
+    - a (int or float): The dividend.
+    - b (int or float): The divisor.
+
+    Returns:
+    - float: The quotient of a divided by b.
+
+    Raises:
+    - ValueError: If b is zero, as division by zero is undefined.
+
+    ValueError: Cannot divide by zero!
+    """
+    # Check if the divisor is zero to prevent division by zero
+    if b == 0:
+        # Raise a ValueError with a descriptive message
+        raise ValueError("Division by zero is not allowed")
+    
+    # Perform division of a by b and return the result as a float
+    result = a // b
+    return result
+
+def absoluteDifference(a: Number, b: Number) -> float:
+    """
+    Subtract the first number by the second and return the absolute value.
+
+    Parameters:
+    - a (int or float): The first number.
+    - b (int or float): The second number.
+
+    Returns:
+    - float: The absolute difference of a subtracted by b.
+
+    ValueError: Cannot divide by zero!
+    """
+    # Perform difference of a by b and return the result as a float
+    result = abs(a - b)
+    return result
+
+def percentage(a: Number, b: Number) -> float:
+    """
+    Find the percentage of the first number by the second and return the value.
+
+    Parameters:
+    - a (int or float): The first number.
+    - b (int or float): The second number.
+
+    Returns:
+    - float: The percentage.
+
+    Raises:
+    - ValueError: If b is zero, as division by zero is undefined.
+
+    ValueError: Zero base is undefined
+    """
+    # Check if the divisor is zero to prevent division by zero
+    if b == 0:
+        # Raise a ValueError with a descriptive message
+        raise ValueError("Zero base is undefined")
+    
+    # Perform division of a by b and return the result as a float
+    result = (float(a) /100) * float(b)
+    return result
+
+
+def logarithm(a: Number, b: Number) -> float:
+    """
+    Find the logarithm the first number by the second and return the value.
+
+    Parameters:
+    - a (int or float): The value.
+    - b (int or float): The base.
+
+    Returns:
+    - float: The logarithm of a base by b.
+
+    Raises:
+    - ValueError: If b is zero, as division by zero is undefined.
+ValueError: Cannot divide by zero!
+    """
+    # Check if the divisor is zero to prevent division by zero
+    if b == 0:
+        raise ValueError("Zero base is undefined")  # Raises an error if division by zero is attempted.
+    if b < 0:
+        raise ValueError("Negative base is undefined") 
+    if b == 1:
+        raise ValueError("Base value one is undefined") 
+    if a == 0:
+        raise ValueError("Zero exponent is undefined")  
+    if a < 0:
+        raise ValueError("Negative exponent is undefined")  
+    # Perform division of a by b and return the result as a float
+    result = math.log(a, b)
     return result

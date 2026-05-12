@@ -209,12 +209,31 @@ python main.py
 - **With Docker**:
 
 ```bash
-docker run -it --rm <image-name>
+docker compose up --build
+```
+
+```bash
+docker compose down -v # for bringing docker down
+```
+
+---
+---
+
+# 📝 7. Testing Instructions
+
+Run tests locally using below command:
+
+```bash
+pytest
+```
+```bash
+pytest --preserve-db # in case you want the test data to stay in database
+
 ```
 
 ---
 
-# 📝 7. Submission Instructions
+# 📝 8. Submission Instructions
 
 After finishing your work:
 
@@ -279,9 +298,9 @@ c. Multiplication - Calculate the product of all input values.
 d. Division - Implements sequential division starting from the first number.
 
 
-# FastAPI new feature #1
+# FastAPI new feature 
 
-- New calculations 
+- New calculations added
 a. Power - Calculate the power of one raised to the second and other subsequent input values
 b. Root - Calculate the root of one to the second and other subsequent input values
 c. Modulus - Calculate the remainder of one number divided to the second and other subsequent input values
@@ -289,4 +308,13 @@ d. Integer Divide - Implements sequential division starting from the first numbe
 e. Absolute Difference - Implements sequential subtraction starting from the first number with a positive result.
 f. Percantage - Calculate the percent of one number with other and then subsequent input values
 g. Logarithm - Calculates the logarithm of one number with other as the base and then subsequent input values.
+
+
+# Important links
+
+# Github repo: 
+https://github.com/garsande/is601_final.git
+
+# Docker repo: 
+https://hub.docker.com/repository/docker/garsande/is601_final_project/general
 
